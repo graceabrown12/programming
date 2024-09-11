@@ -1,0 +1,129 @@
+#Question 2
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0,1,50)
+y = np.log(x)
+z = np.exp(x)
+plt.scatter(x,y)
+plt.scatter(x,z)
+plt.show()
+x = np.linspace(0,1,50)
+y = np.log(x)
+z = np.exp(x)
+plt.scatter(x,y, label ='Natural Log')
+plt.scatter(x,z, label='Exponential')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.legend(loc='lower right')
+plt.title('Natural Log and Exponential Functions')
+plt.show()
+x = np.linspace(-6.5,6.5,100)
+y = np.sin(x)
+z = np.cos(x)
+plt.scatter(x,y)
+plt.scatter(x,z)
+plt.show()
+x = np.linspace(-6.5,6.5,100)
+y = np.sin(x)
+z = np.cos(x)
+plt.plot(x,y, label ='Sine')
+plt.plot(x,z, label='Cosine')
+plt.show()
+x = np.linspace(-6.5,6.5,100)
+y = np.sin(x)
+z = np.cos(x)
+plt.plot(x,y, label ='Sine')
+plt.plot(x,z, label='Cosine')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.legend(loc='lower left')
+plt.title('Sine and Cosine')
+plt.show()
+
+y = np.log(x)
+
+#Question 3
+
+import numpy as np
+np.random.seed(100) 
+rho, sigma_x, sigma_y = -.4, 3, 2
+vcv = np.array([[sigma_x**2, rho*sigma_x*sigma_y],
+                [rho*sigma_x*sigma_y,sigma_y**2]])
+mu = np.array([-1,2])
+sample = np.random.multivariate_normal(mu,vcv,200)
+x = sample[:,0]
+y = sample[:,1]
+
+# Part 1:
+def mean(x):
+    m = np.sum(x)/len(x)
+    return(m)
+print('Sample Mean:', mean(x),'\n')
+
+# Part 2:
+def sd(x):
+    N = len(x)
+    m = mean(x)
+    sumsqdiff = np.sum( (x-m)**2 )
+    sd = np.sqrt(sumsqdiff/(N-1))
+    return(sd)
+print('Sample Standard Deviation:', sd(x),'\n')
+
+# Part 3:
+def zscore(x):
+    z = (x-mean(x))/sd(x)
+    return(z)
+print('Z-scores:', zscore(x)[1:10],'\n')
+
+# Part 4:
+def cov(x,y):
+    N = len(x)
+    sumsqdiff = np.sum( (x-mean(x))*(y-mean(y)) )
+    c = sumsqdiff / (N-1)
+    return(c)
+print('Covariance:', cov(x,y),'\n')
+
+# Part 5:
+def corr(x,y):
+    cv = cov(x,y)
+    s_x = sd(x)
+    s_y = sd(y)
+    r = cv/(s_x*s_y)
+    return(r)
+print('Correlation:', corr(x,y),'\n')
+
+#Question 4
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    y = 100-2*x**2+3*x
+    return(y)
+
+def maximizer(a,b,N,f,showplot=False):
+    x = np.linspace(a,b,N) # Create the grid of values
+    y = f(x) # Evaluate f on the grid
+    #
+    if showplot == True: # This is a plot that appears when showplot==True and not otherwise
+        plt.scatter(x,y)
+        plt.show()
+    #
+    maximum = max(y) 
+    max_index = np.where(maximum==y) 
+    maximizer = x[max_index] 
+    return({'maximum':maximum,'maximizer':maximizer}) 
+a = -1
+b = 1
+
+print(maximizer(a,b,3,f,showplot=True))
+print(maximizer(a,b,10,f,showplot=True))
+print(maximizer(a,b,100,f,showplot=True))
+print(maximizer(a,b,1000,f))
+print(maximizer(a,b,5000,f))
+
+f(.75) 
+
+
+
